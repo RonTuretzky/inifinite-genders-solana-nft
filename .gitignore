@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.local
+dist/
+build/
+*.log
+.DS_Store
+assets/metadata/*.json
+assets/images/*.png
+!assets/images/placeholder.png
+!assets/images/collection.png
+.cache/
+.parcel-cache/

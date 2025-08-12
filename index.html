@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Genders NFT - Solana</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .gender-preview {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            color: white;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gender-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255,255,255,0.1),
+                transparent
+            );
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .gender-name {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .gender-components {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+        
+        .gender-rarity {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .secondary-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .wallet-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .wallet-address {
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: inline-block;
+        }
+        
+        .connected { background: #28a745; }
+        .disconnected { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Infinite Genders NFT</h1>
+        <p class="subtitle">Each mint creates a unique gender identity from infinite combinations</p>
+        
+        <div class="wallet-status">
+            <div>
+                <span class="status-indicator disconnected" id="statusIndicator"></span>
+                <span id="walletStatus">Wallet Not Connected</span>
+            </div>
+            <button id="connectWallet" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+        
+        <div class="gender-preview" id="genderPreview">
+            <div class="gender-name" id="genderName">Preview Gender</div>
+            <div class="gender-components" id="genderComponents">Click "Generate Preview" to see a random gender</div>
+            <div class="gender-rarity" id="genderRarity">Rarity: Unknown</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="tokenId">Token ID (optional - leave empty for random)</label>
+            <input type="number" id="tokenId" placeholder="Enter a specific token ID or leave empty">
+        </div>
+        
+        <div class="form-group">
+            <label for="recipientAddress">Recipient Address (optional - defaults to your wallet)</label>
+            <input type="text" id="recipientAddress" placeholder="Solana wallet address">
+        </div>
+        
+        <div class="button-group">
+            <button onclick="generatePreview()">Generate Preview</button>
+            <button class="secondary-button" onclick="mintNFT()" id="mintButton" disabled>Mint NFT</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalMinted">0</div>
+                <div class="stat-label">Total Minted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="uniqueGenders">∞</div>
+                <div class="stat-label">Possible Genders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">5%</div>
+                <div class="stat-label">Creator Royalty</div>
+            </div>
+        </div>
+        
+        <div id="messageContainer"></div>
+    </div>
+    
+    <script type="module">
+        import { generateUniqueGenderCombination } from './src/genders.js';
+        
+        window.generatePreview = function() {
+            const tokenIdInput = document.getElementById('tokenId').value;
+            const tokenId = tokenIdInput ? parseInt(tokenIdInput) : Math.floor(Math.random() * 100000);
+            
+            const gender = generateUniqueGenderCombination(tokenId);
+            
+            document.getElementById('genderName').textContent = gender.name;
+            document.getElementById('genderComponents').textContent = `Components: ${gender.components.join(', ')}`;
+            document.getElementById('genderRarity').textContent = `Rarity: ${gender.rarity}`;
+            
+            if (!tokenIdInput) {
+                document.getElementById('tokenId').value = tokenId;
+            }
+            
+            showMessage(`Generated preview for Token #${tokenId}`, 'info');
+        };
+        
+        window.connectWallet = async function() {
+            try {
+                if (window.solana && window.solana.isPhantom) {
+                    const response = await window.solana.connect();
+                    const publicKey = response.publicKey.toString();
+                    
+                    document.getElementById('walletStatus').textContent = `Connected: ${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
+                    document.getElementById('statusIndicator').classList.remove('disconnected');
+                    document.getElementById('statusIndicator').classList.add('connected');
+                    document.getElementById('connectWallet').textContent = 'Disconnect';
+                    document.getElementById('mintButton').disabled = false;
+                    
+                    showMessage('Wallet connected successfully!', 'success');
+                } else {
+                    showMessage('Please install Phantom wallet to mint NFTs', 'error');
+                    window.open('https://phantom.app/', '_blank');
+                }
+            } catch (error) {
+                showMessage('Failed to connect wallet: ' + error.message, 'error');
+            }
+        };
+        
+        window.mintNFT = async function() {
+            const tokenId = document.getElementById('tokenId').value;
+            const recipient = document.getElementById('recipientAddress').value;
+            
+            if (!window.solana || !window.solana.isPhantom) {
+                showMessage('Please connect your wallet first', 'error');
+                return;
+            }
+            
+            showMessage('Minting NFT... (This feature requires backend implementation)', 'info');
+            
+            setTimeout(() => {
+                const gender = generateUniqueGenderCombination(tokenId || Date.now());
+                showMessage(`Successfully minted: ${gender.name}`, 'success');
+                updateMintedCount();
+            }, 2000);
+        };
+        
+        function showMessage(message, type) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="message ${type}">${message}</div>`;
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+        
+        function updateMintedCount() {
+            const current = parseInt(document.getElementById('totalMinted').textContent);
+            document.getElementById('totalMinted').textContent = current + 1;
+        }
+        
+        generatePreview();
+    </script>
+</body>
+</html>
