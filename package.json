@@ -1,0 +1,40 @@
+{
+  "name": "infinite-genders-nft",
+  "version": "1.0.0",
+  "description": "A Solana NFT collection that generates unique gender combinations",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "test:anchor": "anchor test",
+    "build": "anchor build",
+    "deploy": "anchor deploy && ts-node scripts/deploy.ts",
+    "mint": "node src/mint.js",
+    "mint:nft": "ts-node scripts/mint-nft.ts",
+    "generate-metadata": "node src/generateMetadata.js",
+    "localnet": "solana-test-validator",
+    "airdrop": "solana airdrop 2"
+  },
+  "keywords": [
+    "solana",
+    "nft",
+    "gender",
+    "metaplex"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@metaplex-foundation/js": "^0.20.1",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.4",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "chai": "^5.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
